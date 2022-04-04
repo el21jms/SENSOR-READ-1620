@@ -1,0 +1,39 @@
+/*  Sensor-Read-Template
+*   Use the AnalogIn to read signals from light, temperature and force sensors. Add code to convert the read values into meaningful user outputs and print.
+*
+*   Author: James Chandler 2022
+*/
+
+#include "mbed.h"
+
+#define WAIT_TIME_MS 100 
+
+BufferedSerial pc(USBTX, USBRX, 115200);        //establish serial communications between PC and NUCLEO
+
+AnalogIn LDR(PC_2); //LDR pin
+AnalogIn TMP(PC_3); //TEMP Sensor pin
+AnalogIn FSR(PA_1); //Force sensor pin
+
+float LDR_val; //Floating oint to store value of LDR
+float TMP_val; //Floating oint to store value of TMP 
+float FSR_val; //Floating oint to store value of FSR
+
+int main()
+{
+
+    
+    while (true)
+    {
+        LDR_val=LDR.read()*100; //read the value of LDR multipllied by 100 to see the value in %
+        TMP_val=TMP.read(); //read the value of TMP (i dont know how to multiply it to display temp in celcius)
+        FSR_val=FSR.read()*100; //read the value of FSR multiplied by 100 to see the value in %
+
+        printf("LDR value is: %.f %\n", LDR_val); //print the value of LDR 
+        printf("TMP value in C degrees: %.5f\n", TMP_val); //print the value of TMP up to 5 decimal places
+        printf("FSR value is: %.f %\n", FSR_val ); //print the value of FSR
+        
+
+        thread_sleep_for(WAIT_TIME_MS);
+    }
+}
+
